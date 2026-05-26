@@ -1,0 +1,6 @@
+{
+  "name": "Theory11 Daily Time Record",
+  "description": "Daily Time Record and attendance app with offline queue support, shift discrepancy calculations, and administrative roster management.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
