@@ -9,8 +9,14 @@ import { offlineQueue } from './lib/offlineQueue';
 import { db, getLastSupabaseError, clearLastSupabaseError, normalizeEid } from './lib/db';
 import { detectShiftAndCalculateDiscrepancies } from './lib/shiftLogic';
 import { format } from 'date-fns';
+import { KioskView } from './components/KioskView';
 
 export default function App() {
+  const [isKioskMode] = useState(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.has('kiosk') || window.location.pathname.startsWith('/kiosk');
+  });
+
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
@@ -284,6 +290,10 @@ export default function App() {
       setIsLoading(false);
     }
   };
+
+  if (isKioskMode) {
+    return <KioskView />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-hd-bg font-sans">

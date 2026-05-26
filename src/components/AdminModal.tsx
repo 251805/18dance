@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Save, Trash2, Plus, QrCode } from 'lucide-react';
+import { X, Save, Trash2, Plus, QrCode, Copy, Check, ExternalLink } from 'lucide-react';
 import { AdminRole, Employee } from '../types';
 import { db, initializeLocalDB } from '../lib/db';
 import { QRCodeSVG } from 'qrcode.react';
@@ -20,6 +20,7 @@ export function AdminModal({ isOpen, onClose }: AdminModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [qrCodeData, setQrCodeData] = useState<string | null>(null);
   const [showUniversalQR, setShowUniversalQR] = useState(false);
+  const [copiedKioskLink, setCopiedKioskLink] = useState(false);
 
   useEffect(() => {
     if (role && isOpen) {
@@ -222,23 +223,57 @@ export function AdminModal({ isOpen, onClose }: AdminModalProps) {
                         Daily Code: a10dance-daily-qr-{new Date().toISOString().split('T')[0]}
                       </p>
 
-                      <div className="text-left bg-slate-50 border border-slate-100 rounded-2xl p-4 mt-6 space-y-2 max-w-sm print:hidden font-sans">
-                        <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">How to use:</div>
-                        <p className="text-[11px] text-slate-600 leading-normal">
-                          <strong>1. Print Badge:</strong> Laminate and mount this QR code near the workspace entrance or dynamic station terminals.
-                        </p>
-                        <p className="text-[11px] text-slate-600 leading-normal">
-                          <strong>2. Scan Attendance:</strong> Crew members scan this QR code with their mobile cameras to automatically register/access the DTR system.
-                        </p>
-                      </div>
+                      <div className="text-left bg-slate-50 border border-slate-100 rounded-2xl p-4 mt-6 space-y-3.5 max-w-sm w-full print:hidden font-sans">
+                        <div>
+                          <div className="text-[10px] uppercase font-black text-slate-400 tracking-wider">Kiosk Deployment Guide:</div>
+                          <p className="text-[11px] text-slate-600 leading-normal mt-1">
+                            Deploy this dedicated URL on your terminal so crew members can scan the rolling real-time QR code with their own mobile app scanner.
+                          </p>
+                        </div>
 
-                      <div className="mt-8 flex gap-3 print:hidden w-full">
-                        <button 
-                          onClick={() => window.print()}
-                          className="w-full flex items-center justify-center gap-1.5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99]"
-                        >
-                          Print Universal QR
-                        </button>
+                        <div className="pt-2 border-t border-slate-150">
+                          <label className="text-[9px] uppercase font-black text-slate-400 tracking-wider">Permanent Web Link</label>
+                          <div className="flex items-center gap-2 mt-1 bg-slate-100 border border-slate-200/60 rounded-xl px-2.5 py-1.5 text-[11px] font-mono text-slate-700 max-w-full truncate">
+                            <span className="flex-1 truncate select-all font-semibold font-mono text-xs">{window.location.origin}/?kiosk=true</span>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2.5 pt-1">
+                          <button
+                            onClick={async () => {
+                              try {
+                                await navigator.clipboard.writeText(`${window.location.origin}/?kiosk=true`);
+                                setCopiedKioskLink(true);
+                                setTimeout(() => setCopiedKioskLink(false), 2000);
+                              } catch (e) {
+                                console.error(e);
+                              }
+                            }}
+                            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 font-extrabold text-[10px] uppercase tracking-wider rounded-xl cursor-pointer transition-all active:scale-95 border border-slate-300/40"
+                          >
+                            {copiedKioskLink ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-600 animate-scale-up" />
+                                Copied!
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5 text-slate-500" />
+                                Copy Link
+                              </>
+                            )}
+                          </button>
+
+                          <a
+                            href="/?kiosk=true"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-[10px] uppercase tracking-wider rounded-xl cursor-pointer transition-all active:scale-95 shadow-sm shadow-blue-600/10"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                            Open View
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>

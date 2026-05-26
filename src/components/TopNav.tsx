@@ -10,9 +10,12 @@ export function TopNav({ onOpenAdmin, onOpenReport }: TopNavProps) {
   return (
     <header className="bg-white w-full border-b border-hd-line h-16 flex items-center justify-between px-6 sticky top-0 z-10">
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 rounded-lg bg-hd-accent text-white flex items-center justify-center font-bold text-base shadow-sm">
-          T
-        </div>
+        {/* Corrected Raw GitHub Asset URL */}
+        <img 
+          src="https://raw.githubusercontent.com/251805/18dance/main/PCCLogo.png" 
+          alt="PCC Logo" 
+          className="w-9 h-9 object-contain rounded-lg shadow-sm"
+        />
         <div>
           <h1 className="text-base font-bold text-hd-ink leading-tight">Pagbilao Command Center</h1>
           <div className="text-[10px] font-medium tracking-wider text-hd-subtext uppercase">DTR Tracker System</div>

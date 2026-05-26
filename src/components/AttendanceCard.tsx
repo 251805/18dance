@@ -223,7 +223,7 @@ export function AttendanceCard({ onPunch, isOffline, isLoading, onOpenScanner }:
                 className="flex-1 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl transition-all disabled:opacity-50 cursor-pointer shadow-sm shadow-blue-600/10"
               >
                 <LogIn className="w-3.5 h-3.5 mr-1.5" />
-                Punch IN
+                IN
               </button>
               <button
                 onClick={() => handlePunch('OUT')}
@@ -231,7 +231,7 @@ export function AttendanceCard({ onPunch, isOffline, isLoading, onOpenScanner }:
                 className="flex-1 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl transition-all disabled:opacity-50 cursor-pointer shadow-sm shadow-orange-500/10"
               >
                 <LogOut className="w-3.5 h-3.5 mr-1.5" />
-                Punch OUT
+                OUT
               </button>
             </div>
           </div>
