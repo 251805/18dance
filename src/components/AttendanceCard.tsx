@@ -124,7 +124,7 @@ export function AttendanceCard({ onPunch, isOffline, isLoading, onOpenScanner }:
                     type="text"
                     value={tempEid}
                     onChange={(e) => setTempEid(e.target.value)}
-                    placeholder="Enter EID (e.g. 2518-05)"
+                    placeholder="Enter EID (e.g. 251805)"
                     className="flex-1 bg-slate-50 border border-slate-200/80 rounded-xl px-3 py-2 text-xs font-extrabold text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                   <button
